@@ -74,7 +74,7 @@ def kopf(aktiv):
 <header class="kopf">
   <div class="container kopf__innen">
     <a class="kopf__logo" href="/" aria-label="Malerbetrieb Kötter, zur Startseite">
-      <img src="/assets/img/logo-kopf.webp" alt="Kötter Malerbetrieb" width="900" height="195">
+      <img src="/assets/img/logo-kopf.webp" alt="Kötter Malerbetrieb" width="900" height="202">
     </a>
     <button class="menue-knopf" type="button" aria-expanded="false" aria-controls="hauptmenue" aria-label="Menü öffnen">{icon("menue")}</button>
     <nav class="nav" id="hauptmenue" aria-label="Hauptmenü">

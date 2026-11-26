@@ -53,6 +53,15 @@ def klein(im, breite):
     return im
 
 
+def schriftzug_ausschneiden(src):
+    """KÖTTER und MALERBETRIEB ausschneiden, inklusive der Ö-Punkte (ab Zeile 354).
+    Den Griff der Farbrolle, der in diesen Bereich ragt, blenden wir aus."""
+    teil = src.crop((60, 354, 965, 672)).copy()
+    leer = Image.new("RGBA", (60, 14), (0, 0, 0, 0))
+    teil.paste(leer, (485 - 60, 0))  # Griff liegt bei x 489 bis 520, y 354 bis 366
+    return teil
+
+
 def logos():
     """Logo zuschneiden: komplettes Logo, Schriftzug für die Kopfzeile, Farbrolle als Symbol."""
     src = Image.open(os.path.join(ROH, "koetter-logo-transparent.png")).convert("RGBA")
@@ -61,7 +70,7 @@ def logos():
     voll.save(os.path.join(ZIEL, "logo-koetter.png"), optimize=True)
     voll.save(os.path.join(ZIEL, "logo-koetter.webp"), "WEBP", quality=88)
     # Schriftzug "KÖTTER / MALERBETRIEB" ohne Rolle (für die Kopfzeile)
-    wort = src.crop((60, 372, 965, 672))
+    wort = schriftzug_ausschneiden(src)
     wort = wort.crop(wort.getchannel("A").getbbox())
     wort = klein(wort, 560)
     wort.save(os.path.join(ZIEL, "logo-schriftzug.webp"), "WEBP", quality=90)
@@ -69,7 +78,7 @@ def logos():
     # Kopfzeile: Farbrolle links, Schriftzug rechts (Logo in einer Zeile)
     rolle = src.crop((190, 50, 860, 357))
     rolle = rolle.crop(rolle.getchannel("A").getbbox())
-    schrift = src.crop((60, 372, 965, 672))
+    schrift = schriftzug_ausschneiden(src)
     schrift = schrift.crop(schrift.getchannel("A").getbbox())
     h = schrift.height
     rolle = rolle.resize((round(rolle.width * h * 0.72 / rolle.height), round(h * 0.72)), Image.LANCZOS)
