@@ -34,6 +34,9 @@ ZUORDNUNG = {
     "team-timo.png": ("team-timo", 432),
     "team-pawel.png": ("team-pawel", 432),
     "team-lukas.png": ("team-lukas", 432),
+    "ChatGPT-Bild 26. Nov. 2026, 13_12_30-1.png": ("farbberatung-muster", 1600),
+    "ChatGPT-Bild 26. Nov. 2026, 13_12_31-2.png": ("farbberatung-faecher", 1200),
+    "ChatGPT-Bild 26. Nov. 2026, 13_12_32-3.png": ("farbberatung-lasur", 1200),
 }
 
 

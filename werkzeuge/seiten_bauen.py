@@ -756,7 +756,7 @@ def farbberatung():
              ("haken", "Böden", "Welcher Boden zur Wandfarbe passt")]
     wobei_html = "".join(f'<div class="wert"><h3>{icon(i)}{t}</h3><p>{x}</p></div>' for i, t, x in wobei)
     inhalt = f'''<section class="hero">
-  {bild("farbberatung-muster.webp", "Drei Musterflächen in Grüntönen an einer Wohnzimmerwand", 1200, 800, cls="hero__bild", lazy=False, prio=True)}
+  {bild("farbberatung-muster.webp", "Drei Musterflächen in Grüntönen an einer Wohnzimmerwand", 1536, 1024, cls="hero__bild", lazy=False, prio=True)}
   <div class="container">
     <div class="hero__inhalt">
       <span class="dachzeile">Farbberatung</span>
