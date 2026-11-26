@@ -66,17 +66,44 @@ def logos():
     wort = klein(wort, 560)
     wort.save(os.path.join(ZIEL, "logo-schriftzug.webp"), "WEBP", quality=90)
     wort.save(os.path.join(ZIEL, "logo-schriftzug.png"), optimize=True)
-    # Komplettes Logo als Tab-Symbol (Favicon) und App-Symbol
-    ganz = src.crop(src.getchannel("A").getbbox())
-    seite = round(max(ganz.size) * 1.08)
-    quadrat = Image.new("RGBA", (seite, seite), (255, 255, 255, 0))
-    quadrat.paste(ganz, ((seite - ganz.width) // 2, (seite - ganz.height) // 2), ganz)
+    # Kopfzeile: Farbrolle links, Schriftzug rechts (Logo in einer Zeile)
+    rolle = src.crop((190, 50, 860, 357))
+    rolle = rolle.crop(rolle.getchannel("A").getbbox())
+    schrift = src.crop((60, 372, 965, 672))
+    schrift = schrift.crop(schrift.getchannel("A").getbbox())
+    h = schrift.height
+    rolle = rolle.resize((round(rolle.width * h * 0.72 / rolle.height), round(h * 0.72)), Image.LANCZOS)
+    abstand = round(h * 0.16)
+    zeile = Image.new("RGBA", (rolle.width + abstand + schrift.width, h), (255, 255, 255, 0))
+    zeile.paste(rolle, (0, (h - rolle.height) // 2), rolle)
+    zeile.paste(schrift, (rolle.width + abstand, 0), schrift)
+    zeile = klein(zeile, 900)
+    zeile.save(os.path.join(ZIEL, "logo-kopf.webp"), "WEBP", quality=90)
+    zeile.save(os.path.join(ZIEL, "logo-kopf.png"), optimize=True)
+
+    # Tab-Symbol: gelbes Quadrat mit dunkelblauem K, bleibt auch bei 16 Pixeln lesbar
+    from PIL import ImageDraw, ImageFont
+    gross = 512
+    sym = Image.new("RGBA", (gross, gross), (0, 0, 0, 0))
+    d = ImageDraw.Draw(sym)
+    d.rounded_rectangle((0, 0, gross - 1, gross - 1), radius=104, fill=(242, 183, 5, 255))
+    schriftart = ImageFont.truetype("C:/Windows/Fonts/seguibl.ttf", 400)
+    box = d.textbbox((0, 0), "K", font=schriftart)
+    x = (gross - (box[2] - box[0])) / 2 - box[0]
+    y = (gross - (box[3] - box[1])) / 2 - box[1]
+    d.text((x, y), "K", font=schriftart, fill=(29, 47, 79, 255))
     for groesse in (32, 48, 192):
-        quadrat.resize((groesse, groesse), Image.LANCZOS).save(os.path.join(ZIEL, f"favicon-{groesse}.png"))
-    quadrat.save(os.path.join(ZIEL, "..", "..", "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
-    weiss = Image.new("RGBA", quadrat.size, (255, 255, 255, 255))
-    weiss.alpha_composite(quadrat)
+        sym.resize((groesse, groesse), Image.LANCZOS).save(os.path.join(ZIEL, f"favicon-{groesse}.png"))
+    sym.save(os.path.join(ZIEL, "..", "..", "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
+    sym.save(os.path.join(ZIEL, "symbol-k.png"))
+
+    # App-Symbol (Handy-Startbildschirm): komplettes Logo auf Weiß
+    ganz = src.crop(src.getchannel("A").getbbox())
+    seite = round(max(ganz.size) * 1.12)
+    weiss = Image.new("RGBA", (seite, seite), (255, 255, 255, 255))
+    weiss.alpha_composite(ganz, ((seite - ganz.width) // 2, (seite - ganz.height) // 2))
     weiss.convert("RGB").resize((180, 180), Image.LANCZOS).save(os.path.join(ZIEL, "apple-touch-icon.png"))
+
     # Helle Version für den dunkelblauen Fußbereich: Dunkelblau wird Weiß, Gelb bleibt
     hell = voll.copy()
     px = hell.load()

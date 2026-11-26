@@ -87,7 +87,7 @@ p { margin: 0 0 1em; max-width: 68ch; }
 /* ---------- Kopfzeile ---------- */
 .kopf { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, .97); border-bottom: 1px solid var(--linie); backdrop-filter: saturate(1.4) blur(6px); }
 .kopf__innen { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
-.kopf__logo img { height: 44px; width: auto; }
+.kopf__logo img { height: 46px; width: auto; }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; align-items: center; }
 .nav a { display: block; padding: 10px 12px; border-radius: 6px; color: var(--text); text-decoration: none; font-weight: 600; font-size: .98rem; }
 .nav a:hover { background: var(--flaeche); color: var(--blau-tief); }
