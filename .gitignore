@@ -1,0 +1,14 @@
+# Originalbilder (groß, liegen nur lokal)
+bilder-roh/
+
+# Daten vom Kontaktformular auf dem Server
+website/formular-daten/*.json
+
+# Python-Zwischendateien
+__pycache__/
+*.pyc
+
+# Windows und Editoren
+Thumbs.db
+Desktop.ini
+.vscode/

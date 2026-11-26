@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /formular-daten/
+
+Sitemap: https://www.malerbetrieb-koetter.de/sitemap.xml
