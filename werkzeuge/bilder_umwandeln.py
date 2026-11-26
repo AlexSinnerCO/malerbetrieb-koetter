@@ -66,16 +66,17 @@ def logos():
     wort = klein(wort, 560)
     wort.save(os.path.join(ZIEL, "logo-schriftzug.webp"), "WEBP", quality=90)
     wort.save(os.path.join(ZIEL, "logo-schriftzug.png"), optimize=True)
-    # Farbrolle als Symbol (Favicon, App-Symbol)
-    rolle = src.crop((190, 50, 860, 357))
-    rolle = rolle.crop(rolle.getchannel("A").getbbox())
-    seite = max(rolle.size) + 40
+    # Komplettes Logo als Tab-Symbol (Favicon) und App-Symbol
+    ganz = src.crop(src.getchannel("A").getbbox())
+    seite = round(max(ganz.size) * 1.08)
     quadrat = Image.new("RGBA", (seite, seite), (255, 255, 255, 0))
-    quadrat.paste(rolle, ((seite - rolle.width) // 2, (seite - rolle.height) // 2), rolle)
+    quadrat.paste(ganz, ((seite - ganz.width) // 2, (seite - ganz.height) // 2), ganz)
+    for groesse in (32, 48, 192):
+        quadrat.resize((groesse, groesse), Image.LANCZOS).save(os.path.join(ZIEL, f"favicon-{groesse}.png"))
+    quadrat.save(os.path.join(ZIEL, "..", "..", "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
     weiss = Image.new("RGBA", quadrat.size, (255, 255, 255, 255))
     weiss.alpha_composite(quadrat)
     weiss.convert("RGB").resize((180, 180), Image.LANCZOS).save(os.path.join(ZIEL, "apple-touch-icon.png"))
-    quadrat.resize((48, 48), Image.LANCZOS).save(os.path.join(ZIEL, "favicon-48.png"))
     # Helle Version für den dunkelblauen Fußbereich: Dunkelblau wird Weiß, Gelb bleibt
     hell = voll.copy()
     px = hell.load()

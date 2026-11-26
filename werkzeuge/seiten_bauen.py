@@ -150,7 +150,9 @@ def seite(datei, pfad, titel, beschreibung, inhalt, extra_head=""):
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{DOMAIN}/assets/img/og-bild.jpg">
 <meta name="theme-color" content="#1d2f4f">
-<link rel="icon" href="/assets/img/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/img/favicon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/style.css">
 {extra_head}
