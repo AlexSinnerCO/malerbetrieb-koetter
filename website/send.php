@@ -92,7 +92,7 @@ $nachricht = text_feld('nachricht', 5000);
 $ok_ds     = isset($_POST['datenschutz']) && $_POST['datenschutz'] === 'ja';
 
 $erlaubt = BEWERBUNG
-    ? ['Ausbildung Maler und Lackierer', 'Geselle Maler und Lackierer', 'Initiativbewerbung', '']
+    ? ['Ausbildung Maler und Lackierer', 'Geselle Maler und Lackierer', 'Schülerpraktikum', 'Initiativbewerbung', '']
     : ['Innenarbeiten', 'Tapezieren', 'Fassade', 'Boden', 'Wärmedämmung', 'Sonstiges', ''];
 if (!in_array($vorhaben, $erlaubt, true)) {
     $vorhaben = BEWERBUNG ? 'Initiativbewerbung' : 'Sonstiges';

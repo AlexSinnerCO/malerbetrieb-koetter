@@ -102,7 +102,7 @@ FUSS = f'''<footer class="fuss">
     </div>
     <div>
       <h2>Erreichbar</h2>
-      <p style="margin:0">Büro: Mo bis Fr, 8 bis 12 Uhr<br>WhatsApp: meist abends bis 20 Uhr<br>Samstag und Sonntag geschlossen</p>
+      <p style="margin:0">Büro: Mo bis Fr, 8 bis 12 Uhr<br>Do zusätzlich 14 bis 17 Uhr<br>WhatsApp: meist abends bis 20 Uhr<br>Samstag und Sonntag geschlossen</p>
     </div>
     <div>
       <h2>Seiten</h2>
@@ -201,7 +201,7 @@ def vorher_nachher(vorher, nachher, alt_vorher, alt_nachher):
 
 STIMMEN = f'''<div class="stimmen">
   <figure class="stimme"><blockquote>„Pünktlich, sauber und unser Wohnzimmer sieht aus wie neu. Gerne wieder!“</blockquote><figcaption>Familie M. aus Bersenbrück</figcaption></figure>
-  <figure class="stimme"><blockquote>„Seit Jahren unser fester Partner für die Treppenhäuser. Termine werden immer eingehalten.“</blockquote><figcaption>Hausverwaltung aus Quakenbrück</figcaption></figure>
+  <figure class="stimme"><blockquote>„Seit Jahren unser fester Partner für die Treppenhäuser. Termine werden immer eingehalten.“</blockquote><figcaption>Hausverwaltung</figcaption></figure>
 </div>
 <div class="sterne"><span class="sterne__symbole" aria-hidden="true">★★★★★</span><span>4,8 von 5 Sternen bei Google</span>
 <a href="{BEWERTUNGEN}" target="_blank" rel="noopener">Alle Bewertungen bei Google lesen</a></div>'''
@@ -219,7 +219,8 @@ def startseite():
         "areaServed": ["Ankum", "Bersenbrück", "Quakenbrück", "Fürstenau", "Bramsche", "Alfhausen", "Osnabrück"],
         "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
                                        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                                       "opens": "08:00", "closes": "12:00"}],
+                                       "opens": "08:00", "closes": "12:00"},
+                                      {"@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "14:00", "closes": "17:00"}],
     }
     head = '<link rel="preload" as="image" href="/assets/img/hero-fassade.webp">\n' \
            f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>'
@@ -514,7 +515,7 @@ def referenzen():
 def formular(art):
     bewerbung = art == "bewerbung"
     if bewerbung:
-        auswahl = ["Ausbildung Maler und Lackierer", "Geselle Maler und Lackierer", "Initiativbewerbung"]
+        auswahl = ["Ausbildung Maler und Lackierer", "Geselle Maler und Lackierer", "Schülerpraktikum", "Initiativbewerbung"]
         auswahl_label, nachricht_label, ort_label = "Worum geht es?", "Erzählen Sie kurz etwas über sich", "Wohnort"
         danke = "Danke für Ihre Bewerbung! Wir melden uns innerhalb von zwei Werktagen bei Ihnen."
         knopf = "Bewerbung senden"
@@ -592,6 +593,11 @@ def karriere():
         <h3>Geselle Maler und Lackierer (m/w/d)</h3>
         <p>Sie haben Ihre Ausbildung abgeschlossen und suchen einen Betrieb, in dem Sie sich wohlfühlen? Erfahrung mit Fassaden und Wärmedämmung (WDVS) ist ein Plus, aber kein Muss.</p>
       </article>
+      <article class="stelle">
+        <span class="stelle__start">Jederzeit nach Absprache</span>
+        <h3>Schülerpraktikum</h3>
+        <p>Sie wollen herausfinden, ob das Malerhandwerk etwas für Sie ist? Bei uns können Sie ein Schülerpraktikum machen und auf echten Baustellen mit anpacken. Melden Sie sich einfach per Telefon, WhatsApp oder über das Formular.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -627,7 +633,7 @@ def kontakt():
     <div>
       <ul class="kontakt-liste">
         <li>{icon("ort")}<div><strong>Malerbetrieb Kötter</strong><span>Inhaber Jens Kötter<br>Hauptstraße 41<br>49577 Ankum</span></div></li>
-        <li>{icon("telefon")}<div><strong>Telefon Büro</strong><a href="{TEL_LINK}">{TEL_ANZEIGE}</a><br><span>Montag bis Freitag, 8 bis 12 Uhr. Nachmittags hinterlassen Sie gern eine Nachricht auf dem Anrufbeantworter, wir rufen zurück.</span></div></li>
+        <li>{icon("telefon")}<div><strong>Telefon Büro</strong><a href="{TEL_LINK}">{TEL_ANZEIGE}</a><br><span>Montag bis Freitag, 8 bis 12 Uhr, donnerstags zusätzlich 14 bis 17 Uhr. Sonst hinterlassen Sie gern eine Nachricht auf dem Anrufbeantworter, wir rufen zurück.</span></div></li>
         <li>{icon("whatsapp")}<div><strong>WhatsApp</strong><a href="{WA_LINK}" target="_blank" rel="noopener">{WA_ANZEIGE}</a><br><span>Wir antworten in der Regel abends bis 20 Uhr, am Wochenende am nächsten Werktag.</span></div></li>
         <li>{icon("mail")}<div><strong>E-Mail</strong><a href="mailto:{MAIL}">{MAIL}</a></div></li>
         <li>{icon("uhr")}<div><strong>Wochenende</strong><span>Samstags und sonntags ist geschlossen.</span></div></li>
@@ -656,7 +662,7 @@ def kontakt():
   </div>
 </section>'''
     seite("kontakt.html", "/kontakt", "Kontakt | Malerbetrieb Kötter Ankum",
-          "Malerbetrieb Kötter, Hauptstraße 41, 49577 Ankum. Telefon 05462 00000, Büro Montag bis Freitag 8 bis 12 Uhr. Kostenlose Besichtigung vor Ort.", inhalt)
+          "Malerbetrieb Kötter, Hauptstraße 41, 49577 Ankum. Telefon 05462 00000, Büro Montag bis Freitag 8 bis 12 Uhr, donnerstags auch 14 bis 17 Uhr. Kostenlose Besichtigung vor Ort.", inhalt)
 
 
 # ------------------------------------------------------------------ Rechtliches und 404
@@ -670,6 +676,61 @@ def rechtstext(datei, pfad, titel, h1, hinweis):
 </div></section>'''
     head = '<meta name="robots" content="noindex, follow">' if datei == "datenschutz.html" else ""
     seite(datei, pfad, titel, f"{h1} des Malerbetriebs Kötter, Ankum.", inhalt, head)
+
+
+UEBUNG_HINWEIS = '''<div class="platzhalter-kasten" style="margin-bottom:32px">
+  <p style="margin:0"><strong>Übungsbeispiel:</strong> Firma und Daten sind ausgedacht. Dieser Text ist ein Muster und keine Rechtsberatung.
+  Bei echten Kunden erstellt der Kunde Impressum und Datenschutzerklärung selbst (Generator oder Anwalt), Sinner Webdesign baut sie nur ein.</p>
+</div>'''
+
+
+def impressum():
+    inhalt = f'''<section class="seitenkopf"><div class="container"><h1>Impressum</h1></div></section>
+<section class="abschnitt"><div class="container rechtstext">
+{UEBUNG_HINWEIS}
+<h2>Angaben gemäß § 5 DDG</h2>
+<p>Malerbetrieb Kötter<br>Inhaber: Jens Kötter<br>Hauptstraße 41<br>49577 Ankum</p>
+<h2>Kontakt</h2>
+<p>Telefon: {TEL_ANZEIGE}<br>E-Mail: <a href="mailto:{MAIL}">{MAIL}</a></p>
+<h2>Steuernummer</h2>
+<p>65/000/00000 (Finanzamt Bersenbrück)<br>Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
+<h2>Berufsbezeichnung und berufsrechtliche Regelungen</h2>
+<p>Berufsbezeichnung: Maler- und Lackierermeister (verliehen in der Bundesrepublik Deutschland)<br>
+Eintragung in der Handwerksrolle der Handwerkskammer Osnabrück-Emsland-Grafschaft Bentheim, Bramscher Straße 134–136, 49088 Osnabrück<br>
+Es gilt die Handwerksordnung (HwO), einsehbar unter <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank" rel="noopener">gesetze-im-internet.de</a>.</p>
+<h2>Verbraucherstreitbeilegung</h2>
+<p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+<h2>Webdesign</h2>
+<p>Sinner Webdesign, Inhaber Alex Sinner, Bersenbrück</p>
+</div></section>'''
+    seite("impressum.html", "/impressum", "Impressum | Malerbetrieb Kötter", "Impressum des Malerbetriebs Kötter, Ankum.", inhalt)
+
+
+def datenschutz():
+    inhalt = f'''<section class="seitenkopf"><div class="container"><h1>Datenschutzerklärung</h1></div></section>
+<section class="abschnitt"><div class="container rechtstext">
+{UEBUNG_HINWEIS}
+<h2>1. Verantwortlicher</h2>
+<p>Malerbetrieb Kötter, Inhaber Jens Kötter, Hauptstraße 41, 49577 Ankum<br>Telefon {TEL_ANZEIGE}, E-Mail <a href="mailto:{MAIL}">{MAIL}</a></p>
+<h2>2. Ihre Rechte</h2>
+<p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO). Eine erteilte Einwilligung können Sie jederzeit für die Zukunft widerrufen. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für den Datenschutz Niedersachsen.</p>
+<h2>3. Hosting</h2>
+<p>Diese Website liegt bei der ALL-INKL.COM – Neue Medien Münnich, Hauptstraße 68, 02742 Friedersdorf. Beim Aufruf speichert der Server automatisch technische Daten wie IP-Adresse, Datum und Uhrzeit, aufgerufene Seite und Browser (Server-Logfiles). Das ist nötig, um die Seite sicher und stabil anzuzeigen (Art. 6 Abs. 1 lit. f DSGVO). Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung.</p>
+<h2>4. Keine Cookies, keine Statistik, keine fremden Schriften</h2>
+<p>Diese Website setzt keine Cookies und verwendet keine Statistik- oder Werbedienste. Alle Schriften werden lokal geladen, es wird keine Verbindung zu Google Fonts aufgebaut.</p>
+<h2>5. Kontakt- und Bewerbungsformular, E-Mail, Telefon</h2>
+<p>Wenn Sie uns über das Formular, per E-Mail oder telefonisch kontaktieren, verarbeiten wir Ihre Angaben (z. B. Name, Kontaktdaten, Nachricht), um Ihre Anfrage zu bearbeiten (Art. 6 Abs. 1 lit. b DSGVO). Formularanfragen werden per E-Mail an uns weitergeleitet. Zum Schutz vor Missbrauch speichert der Server kurzzeitig eine verschlüsselte Prüfsumme Ihrer IP-Adresse, die nach einer Stunde gelöscht wird. Bewerbungsunterlagen löschen wir spätestens sechs Monate nach Abschluss des Verfahrens, sofern Sie nicht eingestellt werden.</p>
+<h2>6. WhatsApp</h2>
+<p>Auf der Website gibt es Links zu WhatsApp. Erst wenn Sie darauf tippen, wird WhatsApp (WhatsApp Ireland Limited, Dublin, Irland) geöffnet. Dabei gelten die Datenschutzbestimmungen von WhatsApp. Daten können dabei auch in die USA übermittelt werden. Bitte schicken Sie uns über WhatsApp keine sensiblen Daten.</p>
+<h2>7. Karte (OpenStreetMap)</h2>
+<p>Auf der Kontaktseite können Sie eine Karte von OpenStreetMap (OpenStreetMap Foundation, Cambridge, Großbritannien) laden. Die Karte wird erst angezeigt, wenn Sie auf „Karte anzeigen“ klicken. Dabei wird Ihre IP-Adresse an OpenStreetMap übertragen (Art. 6 Abs. 1 lit. a DSGVO, Einwilligung durch Klick).</p>
+<h2>8. Google Maps (Link)</h2>
+<p>Der Knopf „Route planen“ ist ein normaler Link zu Google Maps. Erst beim Anklicken verlassen Sie unsere Website, dann gelten die Datenschutzbestimmungen von Google.</p>
+<h2>9. Stand</h2>
+<p>März 2027</p>
+</div></section>'''
+    seite("datenschutz.html", "/datenschutz", "Datenschutzerklärung | Malerbetrieb Kötter", "Datenschutzerklärung des Malerbetriebs Kötter, Ankum.",
+          inhalt, '<meta name="robots" content="noindex, follow">')
 
 
 def fehlerseite():
@@ -697,10 +758,8 @@ if __name__ == "__main__":
     referenzen()
     karriere()
     kontakt()
-    rechtstext("impressum.html", "/impressum", "Impressum | Malerbetrieb Kötter", "Impressum",
-               "Hier wird das Impressum eingefügt, das Frau Kötter mit dem Generator erstellt hat. Sinner Webdesign erstellt keine Rechtstexte, sondern baut sie nur technisch ein.")
-    rechtstext("datenschutz.html", "/datenschutz", "Datenschutzerklärung | Malerbetrieb Kötter", "Datenschutzerklärung",
-               "Hier wird die Datenschutzerklärung eingefügt, die Frau Kötter mit dem Generator erstellt hat. Technisch genutzt werden: Hosting bei all-inkl, Kontakt- und Bewerbungsformular (Versand per E-Mail), WhatsApp-Link, OpenStreetMap-Karte erst nach Klick, Link zu Google Maps. Schriften werden nicht von Google geladen, es gibt keine Cookies und keine Statistik.")
+    impressum()
+    datenschutz()
     fehlerseite()
     sitemap()
     print("Fertig:", sorted(f for f in os.listdir(ZIEL) if f.endswith((".html", ".xml"))))
