@@ -13,6 +13,11 @@ WEB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "website")
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    # Windows kennt .webp manchmal nicht und meldet dann "application/octet-stream"
+    extensions_map = {**http.server.SimpleHTTPRequestHandler.extensions_map,
+                      ".webp": "image/webp", ".svg": "image/svg+xml", ".ico": "image/x-icon",
+                      ".js": "text/javascript", ".css": "text/css"}
+
     def __init__(self, *a, **k):
         super().__init__(*a, directory=WEB, **k)
 
