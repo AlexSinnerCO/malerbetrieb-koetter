@@ -1,0 +1,49 @@
+# Vorschau der Website auf GitHub Pages
+# Läuft bei jedem Hochladen auf main. Die Vorschau ist für Google gesperrt (noindex),
+# das Kontaktformular funktioniert dort nicht (GitHub Pages kann kein PHP).
+name: Vorschau auf GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  vorschau:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vorschau vorbereiten
+        env:
+          BASIS: /${{ github.event.repository.name }}/
+        run: |
+          cp -r website _vorschau
+          cd _vorschau
+          # Adressen wie /assets/... auf den Unterordner der Vorschau umstellen
+          sed -i -E "s#(href|src|action|data-gross)=\"/#\1=\"${BASIS}#g" *.html
+          # Für Suchmaschinen sperren
+          sed -i 's#<head>#<head>\n<meta name="robots" content="noindex, nofollow">#' *.html
+          printf 'User-agent: *\nDisallow: /\n' > robots.txt
+          rm -f .htaccess send.php
+          rm -rf formular-daten
+          touch .nojekyll
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _vorschau
+      - id: deploy
+        uses: actions/deploy-pages@v4
