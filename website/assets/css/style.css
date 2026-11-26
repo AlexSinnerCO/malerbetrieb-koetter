@@ -318,3 +318,16 @@ a.kachel:hover { box-shadow: var(--schatten); transform: translateY(-3px); color
 .wa-knopf__text { display: grid; line-height: 1.2; padding-right: 8px; }
 .wa-knopf__text small { font-weight: 500; opacity: .9; font-size: .78rem; }
 @media (max-width: 700px) { .wa-knopf__text { display: none; } }
+
+/* ---------- Farbberatung: Ablauf in Schritten ---------- */
+.schritte { list-style: none; counter-reset: schritt; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.schritte > li { counter-increment: schritt; position: relative; background: #fff; border: 1px solid var(--linie); border-radius: var(--radius); padding: 64px 22px 22px; min-width: 0; }
+.schritte > li::before { content: counter(schritt); position: absolute; top: 18px; left: 22px; width: 34px; height: 34px; border-radius: 50%; background: var(--gelb); color: var(--blau-tief); font-weight: 800; display: grid; place-items: center; }
+.schritte h3 { font-size: 1.08rem; margin-bottom: .4em; }
+.schritte p { margin: 0; color: var(--grau); font-size: .97rem; }
+@media (max-width: 960px) { .schritte { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .schritte { grid-template-columns: 1fr; } }
+.stimme h3 { color: var(--blau-tief); }
+
+/* Menü mit 7 Punkten: etwas enger, damit alles in eine Zeile passt */
+@media (min-width: 961px) and (max-width: 1180px) { .nav a { padding: 10px 8px; font-size: .94rem; } .kopf__logo img { height: 40px; } }

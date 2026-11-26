@@ -93,7 +93,7 @@ $ok_ds     = isset($_POST['datenschutz']) && $_POST['datenschutz'] === 'ja';
 
 $erlaubt = BEWERBUNG
     ? ['Ausbildung Maler und Lackierer', 'Geselle Maler und Lackierer', 'Schülerpraktikum', 'Initiativbewerbung', '']
-    : ['Innenarbeiten', 'Tapezieren', 'Fassade', 'Boden', 'Wärmedämmung', 'Sonstiges', ''];
+    : ['Innenarbeiten', 'Tapezieren', 'Fassade', 'Boden', 'Wärmedämmung', 'Farbberatung', 'Sonstiges', ''];
 if (!in_array($vorhaben, $erlaubt, true)) {
     $vorhaben = BEWERBUNG ? 'Initiativbewerbung' : 'Sonstiges';
 }

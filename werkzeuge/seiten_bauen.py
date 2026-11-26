@@ -61,7 +61,7 @@ def bild(datei, alt, breite, hoehe, cls="", lazy=True, prio=False):
 
 
 # ------------------------------------------------------------------ Bausteine
-MENUE = [("/", "Start"), ("/leistungen", "Leistungen"), ("/ueber-uns", "Über uns"),
+MENUE = [("/", "Start"), ("/leistungen", "Leistungen"), ("/farbberatung", "Farbberatung"), ("/ueber-uns", "Über uns"),
          ("/referenzen", "Referenzen"), ("/karriere", "Karriere"), ("/kontakt", "Kontakt")]
 
 
@@ -108,6 +108,7 @@ FUSS = f'''<footer class="fuss">
       <h2>Seiten</h2>
       <ul>
         <li><a href="/leistungen">Leistungen</a></li>
+        <li><a href="/farbberatung">Farbberatung</a></li>
         <li><a href="/ueber-uns">Über uns</a></li>
         <li><a href="/referenzen">Referenzen</a></li>
         <li><a href="/karriere">Karriere</a></li>
@@ -234,9 +235,9 @@ def startseite():
     ]:
         kacheln += (f'<a class="kachel" href="/leistungen#{anker}">{bild(img, titel, 1200, 900)}'
                     f'<div class="kachel__text"><h3>{titel}</h3><p>{text}</p></div></a>')
-    kacheln += (f'<a class="kachel kachel--aufruf" href="/kontakt#formular"><div class="kachel__text">'
-                f'<h3>Kostenlose Besichtigung</h3><p>Wir kommen vorbei, sehen uns alles an und machen Ihnen ein Angebot.</p>'
-                f'<span class="knopf knopf--gelb">Termin anfragen</span></div></a>')
+    kacheln += (f'<a class="kachel kachel--aufruf" href="/farbberatung"><div class="kachel__text">'
+                f'<h3>Kostenlose Farbberatung</h3><p>Mit Farbfächer, Musterflächen an Ihrer Wand und Farbsimulation für Fassaden. Bei der Besichtigung vor Ort kostenlos.</p>'
+                f'<span class="knopf knopf--gelb">Mehr erfahren</span></div></a>')
     orte = "".join(f"<li>{o}</li>" for o in ["Ankum", "Bersenbrück", "Quakenbrück", "Fürstenau", "Bramsche", "Alfhausen", "und die Orte dazwischen"])
     inhalt = f'''<section class="hero">
   {bild("hero-fassade.webp", "Maler von Kötter streicht auf dem eigenen Gerüst eine Hausfassade", 1600, 900, cls="hero__bild", lazy=False, prio=True)}
@@ -520,7 +521,7 @@ def formular(art):
         danke = "Danke für Ihre Bewerbung! Wir melden uns innerhalb von zwei Werktagen bei Ihnen."
         knopf = "Bewerbung senden"
     else:
-        auswahl = ["Innenarbeiten", "Tapezieren", "Fassade", "Boden", "Wärmedämmung", "Sonstiges"]
+        auswahl = ["Innenarbeiten", "Tapezieren", "Fassade", "Boden", "Wärmedämmung", "Farbberatung", "Sonstiges"]
         auswahl_label, nachricht_label, ort_label = "Worum geht es?", "Ihre Nachricht", "Ort"
         danke = "Danke für Ihre Anfrage! Wir melden uns innerhalb von zwei Werktagen bei Ihnen."
         knopf = "Anfrage senden"
@@ -733,6 +734,106 @@ def datenschutz():
           inhalt, '<meta name="robots" content="noindex, follow">')
 
 
+# ------------------------------------------------------------------ Farbberatung (Nachtrag 2027-001-N1)
+def farbberatung():
+    schritte = [
+        ("Sie melden sich", "Per Telefon, WhatsApp oder über das Formular. Wenn Sie mögen, schicken Sie uns vorab ein paar Fotos vom Raum oder vom Haus per WhatsApp. Dann bringen wir gleich die passenden Muster mit."),
+        ("Wir kommen zu Ihnen", "Malermeister Jens Kötter sieht sich alles vor Ort an und hat Farbfächer mit mehreren tausend Farbtönen dabei."),
+        ("Musterflächen an Ihrer Wand", "Wenn Sie unsicher sind, streichen wir zwei oder drei Farben als Musterfläche direkt an die Wand, jeweils etwa 50 × 50 cm. So sehen Sie die Farbe ein paar Tage lang, morgens und abends, bei unterschiedlichem Licht."),
+        ("Sie entscheiden in Ruhe", "Danach bekommen Sie von uns ein Angebot."),
+    ]
+    schritte_html = "".join(f'<li><h3>{t}</h3><p>{x}</p></li>' for t, x in schritte)
+    womit = ["<strong>Farbfächer</strong> für innen und außen",
+             "<strong>Musterflächen</strong> direkt an Ihrer Wand",
+             "<strong>Farbsimulation für Fassaden:</strong> Aus einem Foto Ihres Hauses entsteht am Bildschirm eine Ansicht in verschiedenen Farben",
+             "<strong>Lasur-Musterbrettchen</strong> für Holz, z. B. Fachwerk, Fenster und Zäune",
+             "<strong>Tapeten-Musterbücher</strong>",
+             "<strong>Fotos von früheren Projekten,</strong> damit Sie sehen, wie ein Farbton an einem echten Haus wirkt"]
+    womit_html = '<ul class="liste-haken">' + "".join(f"<li>{w}</li>" for w in womit) + "</ul>"
+    wobei = [("haus", "Innenräume", "Wohnzimmer, Kinderzimmer, Flur und Treppenhäuser"),
+             ("geruest", "Fassaden", "Mit Farbsimulation vom Hersteller"),
+             ("werkzeug", "Holz", "Fachwerk, Fenster und Zäune"),
+             ("haken", "Böden", "Welcher Boden zur Wandfarbe passt")]
+    wobei_html = "".join(f'<div class="wert"><h3>{icon(i)}{t}</h3><p>{x}</p></div>' for i, t, x in wobei)
+    inhalt = f'''<section class="hero">
+  {bild("farbberatung-muster.webp", "Drei Musterflächen in Grüntönen an einer Wohnzimmerwand", 1200, 800, cls="hero__bild", lazy=False, prio=True)}
+  <div class="container">
+    <div class="hero__inhalt">
+      <span class="dachzeile">Farbberatung</span>
+      <h1>Die richtige Farbe, <span class="strich">bevor</span> der erste Pinselstrich gesetzt wird</h1>
+      <p>Eine Farbe sieht im Fächer oft ganz anders aus als an der Wand. Damit Sie hinterher nicht jahrelang mit einem Farbton leben, der Ihnen nicht gefällt, beraten wir Sie vorher bei Ihnen zu Hause. Als Teil der Besichtigung ist die Farbberatung kostenlos.</p>
+      <div class="knoepfe">
+        <a class="knopf knopf--gelb" href="/kontakt#formular">Farbberatung anfragen</a>
+        <a class="knopf knopf--hell" href="{WA_LINK}" target="_blank" rel="noopener">{icon("whatsapp")}Per WhatsApp schreiben</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <div class="container">
+    <div class="kopf-abschnitt"><span class="dachzeile">Ablauf</span><h2>So läuft die Farbberatung ab</h2></div>
+    <ol class="schritte">{schritte_html}</ol>
+    <p class="hinweis" style="margin-top:28px"><strong>Wie lange dauert das?</strong> Für Innenräume etwa 30 bis 45 Minuten, bei Fassaden rund eine Stunde. Die Farbsimulation für Ihre Fassade bekommen Sie etwa eine Woche später per E-Mail.</p>
+  </div>
+</section>
+
+<section class="abschnitt abschnitt--grau">
+  <div class="container zweispaltig">
+    <div>
+      <span class="dachzeile">Hilfsmittel</span>
+      <h2>Womit wir beraten</h2>
+      {womit_html}
+    </div>
+    {bild("farbberatung-faecher.webp", "Aufgefächerter Farbfächer auf einem Holztisch", 1200, 900, cls="bild-rund")}
+  </div>
+</section>
+
+<section class="abschnitt">
+  <div class="container">
+    <div class="kopf-abschnitt"><span class="dachzeile">Bereiche</span><h2>Wobei wir beraten</h2></div>
+    <div class="werte">{wobei_html}</div>
+  </div>
+</section>
+
+<section class="abschnitt abschnitt--grau">
+  <div class="container">
+    <div class="kopf-abschnitt"><span class="dachzeile">Aus der Praxis</span><h2>Jens Kötter erzählt</h2></div>
+    <div class="stimmen">
+      <article class="stimme"><h3>Die Fassade, die ein Bunker geworden wäre</h3><p style="margin:0">Eine Familie wollte ihre Fassade ganz dunkel streichen lassen, in Anthrazit, so wie sie es im Internet gesehen hatte. Die Farbsimulation hat gezeigt: Mit den eher kleinen Fenstern hätte das Haus sehr düster gewirkt. Gemeinsam haben wir uns für ein helleres Grau entschieden, nur Sockel und Fensterrahmen wurden dunkel. Hinterher haben sogar die Nachbarn gefragt, wer das gemacht hat.</p></article>
+      <article class="stimme"><h3>Das Kinderzimmer in Bananengelb</h3><p style="margin:0">Ein zartes Gelb sah im Farbfächer genau richtig aus. Als Musterfläche an der Wand war es dann deutlich kräftiger. Gut, dass wir es vorher ausprobiert haben und nicht gleich das ganze Zimmer gestrichen.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <div class="container zweispaltig zweispaltig--umgekehrt">
+    <div>
+      <span class="dachzeile">Ihre Ansprechpartner</span>
+      <h2>Wer Sie berät</h2>
+      <p>Die Farbberatung macht Malermeister Jens Kötter selbst. Oft ist Sabine Kötter mit dabei, die ein gutes Auge für Farben hat. Bei Altbau und Stuck kommt unser Geselle Dieter mit, er kennt sich mit alten Farben und Techniken am besten aus.</p>
+      <h2 style="margin-top:40px">Was kostet die Farbberatung?</h2>
+      <p>Die Farbberatung gehört zu unserer kostenlosen Besichtigung vor Ort. Musterflächen und Farbsimulation sind ebenfalls kostenlos.</p>
+      <p class="hinweis">Drei Musterflächen sind immer inklusive. Wünschen Sie mehr als drei und beauftragen uns danach nicht, berechnen wir für die Muster pauschal 50 €. Beauftragen Sie uns später doch, rechnen wir die 50 € an.</p>
+    </div>
+    {bild("farbberatung-lasur.webp", "Lasur-Musterbrettchen an einem Fachwerkbalken", 1200, 900, cls="bild-rund")}
+  </div>
+</section>
+
+<section class="abschnitt abschnitt--blau">
+  <div class="container aufruf">
+    <div><h2>Noch unsicher bei der Farbe?</h2><p class="einleitung" style="margin:0">Wir kommen kostenlos vorbei und finden gemeinsam mit Ihnen den passenden Farbton.</p></div>
+    <div class="knoepfe">
+      <a class="knopf knopf--gelb" href="{TEL_LINK}">{icon("telefon")}{TEL_ANZEIGE} anrufen</a>
+      <a class="knopf knopf--wa" href="{WA_LINK}" target="_blank" rel="noopener">{icon("whatsapp")}Fotos per WhatsApp schicken</a>
+      <a class="knopf knopf--hell" href="/kontakt#formular">Anfrage senden</a>
+    </div>
+  </div>
+</section>'''
+    seite("farbberatung.html", "/farbberatung", "Farbberatung | Malerbetrieb Kötter Ankum",
+          "Farbberatung bei Ihnen zu Hause: mit Farbfächer, Musterflächen an der Wand und Farbsimulation für Fassaden. Bei der Besichtigung kostenlos. Malermeister aus Ankum.", inhalt)
+
+
 def fehlerseite():
     inhalt = f'''<section class="abschnitt"><div class="container" style="text-align:center">
   <p class="dachzeile">Fehler 404</p>
@@ -745,7 +846,7 @@ def fehlerseite():
 
 
 def sitemap():
-    seiten = ["/", "/leistungen", "/ueber-uns", "/referenzen", "/karriere", "/kontakt", "/impressum"]
+    seiten = ["/", "/leistungen", "/farbberatung", "/ueber-uns", "/referenzen", "/karriere", "/kontakt", "/impressum"]
     eintraege = "".join(f"  <url><loc>{DOMAIN}{s}</loc></url>\n" for s in seiten)
     with open(os.path.join(ZIEL, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + eintraege + "</urlset>\n")
@@ -758,6 +859,7 @@ if __name__ == "__main__":
     referenzen()
     karriere()
     kontakt()
+    farbberatung()
     impressum()
     datenschutz()
     fehlerseite()
