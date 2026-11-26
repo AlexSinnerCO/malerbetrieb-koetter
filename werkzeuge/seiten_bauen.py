@@ -502,7 +502,7 @@ def referenzen():
 </section>
 <dialog class="lightbox" aria-label="Großansicht">
   <button class="lightbox__zu" type="button" aria-label="Schließen">×</button>
-  <img src="" alt="">
+  <img alt="">
   <p></p>
 </dialog>
 {aufruf_band("Ihr Haus könnte das nächste sein.", "Wir kommen kostenlos vorbei und sehen uns alles an.", anfrage_text="Kostenlose Besichtigung anfragen")}'''
